@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Стежка до власної квітки папороті</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at center, #101d32 0%, #050a13 55%, #010308 100%);
+      color: #e8edf5;
+      font-family: Georgia, "Times New Roman", serif;
+      overflow: hidden;
+    }
+
+    .screen {
+      width: 100vw;
+      height: 100vh;
+      min-height: 600px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      padding: 30px;
+
+      position: relative;
+    }
+
+    .title {
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: normal;
+      letter-spacing: 2px;
+      margin: 0 0 18px;
+
+      opacity: 0;
+      animation: appear 3s ease forwards;
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 2.2vw, 28px);
+      color: #b8c6d9;
+      letter-spacing: 1px;
+      margin: 0;
+
+      opacity: 0;
+      animation: appear 3s ease 1.5s forwards;
+    }
+
+    .enter-button {
+      margin-top: 55px;
+
+      padding: 18px 36px;
+
+      border: 1px solid rgba(220, 190, 100, 0.7);
+      border-radius: 50px;
+
+      background: rgba(10, 20, 35, 0.75);
+      color: #f0d77a;
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 19px;
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      opacity: 0;
+      animation: appear 3s ease 3s forwards;
+
+      transition:
+        background 0.5s ease,
+        box-shadow 0.5s ease,
+        transform 0.5s ease;
+    }
+
+    .enter-button:hover {
+      background: rgba(45, 65, 80, 0.85);
+
+      box-shadow:
+        0 0 20px rgba(240, 215, 122, 0.25),
+        0 0 50px rgba(240, 215, 122, 0.1);
+
+      transform: scale(1.04);
+    }
+
+    .tripillian-symbol {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .fade-out {
+      animation: disappear 1.5s ease forwards;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes disappear {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .screen {
+        padding: 20px;
+      }
+
+      .enter-button {
+        font-size: 17px;
+        padding: 16px 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="screen" id="intro">
+
+    <h1 class="title">
+      Стежка до власної квітки папороті
+    </h1>
+
+    <p class="subtitle">
+      Символічна мандрівка до власного глибинного джерела
+    </p>
+
+    <button class="enter-button" id="startButton">
+      <span class="tripillian-symbol">𒀭</span>
+      🌲 Зайти до темного лісу
+    </button>
+
+  </main>
+
+  <script>
+    const startButton = document.getElementById("startButton");
+    const intro = document.getElementById("intro");
+
+    startButton.addEventListener("click", () => {
+      intro.classList.add("fade-out");
+
+      setTimeout(() => {
+        alert("Тут почнеться подорож до темного лісу 🌲");
+      }, 1500);
+    });
+  </script>
+
+</body>
+</html>
