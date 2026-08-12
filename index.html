@@ -1,179 +1,619 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Стежка до власної квітки папороті</title>
+<title>Стежка до власної квітки папороті</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #14251f 0%,
+            #09130f 45%,
+            #020605 100%
+        );
+
+    color: #e8e2cf;
+
+    font-family:
+        "Rutenia",
+        "Rutenia Unicode",
+        Georgia,
+        "Times New Roman",
+        serif;
+}
+
+
+/* Ледь помітна глибина лісу */
+
+.forest {
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(58, 86, 63, 0.18),
+            transparent 55%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Ледь помітний туман */
+
+.fog {
+    position: fixed;
+    inset: -20%;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgba(150, 170, 145, 0.06),
+            transparent 55%
+        );
+
+    filter: blur(25px);
+
+    animation: fogMove 18s ease-in-out infinite alternate;
+
+    pointer-events: none;
+}
+
+@keyframes fogMove {
+
+    from {
+        transform: translateX(-3%) translateY(1%);
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
+    to {
+        transform: translateX(3%) translateY(-1%);
+    }
+}
+
+
+/* Центральна сцена */
+
+.intro {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+
+/* Текст */
+
+.story {
+    position: relative;
+
+    width: min(900px, 90vw);
+
+    min-height: 160px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Окрема фраза */
+
+.line {
+    position: absolute;
+
+    width: 100%;
+
+    opacity: 0;
+
+    transform:
+        translateY(18px)
+        scale(0.985);
+
+    filter: blur(5px);
+
+    font-size: clamp(27px, 4.3vw, 56px);
+
+    line-height: 1.35;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 12px rgba(200, 220, 190, 0.12),
+        0 0 35px rgba(100, 130, 100, 0.08);
+
+    transition:
+        opacity 2.2s ease,
+        transform 2.2s ease,
+        filter 2.2s ease;
+}
+
+
+/* Фраза з'явилася */
+
+.line.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    filter: blur(0);
+}
+
+
+/* Фраза зникає */
+
+.line.hidden {
+
+    opacity: 0;
+
+    transform:
+        translateY(-12px)
+        scale(1.015);
+
+    filter: blur(4px);
+}
+
+
+/* Остання фраза */
+
+.final-line {
+
+    font-size: clamp(31px, 5vw, 64px);
+
+    color: #d8c986;
+
+    text-shadow:
+        0 0 18px rgba(216, 201, 134, 0.18),
+        0 0 50px rgba(216, 201, 134, 0.08);
+}
+
+
+/* Кнопка */
+
+.enter-button {
+
+    position: absolute;
+
+    bottom: 13vh;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        translateY(15px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    padding: 17px 34px;
+
+    border:
+        1px solid
+        rgba(216, 201, 134, 0.55);
+
+    border-radius: 50px;
+
+    background:
+        rgba(8, 18, 14, 0.72);
+
+    color: #d8c986;
+
+    font-family:
+        "Rutenia",
+        "Rutenia Unicode",
+        Georgia,
+        serif;
+
+    font-size: 19px;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    transition:
+        opacity 2s ease,
+        transform 1s ease,
+        background 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+
+.enter-button.show {
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+.enter-button:hover {
+
+    background:
+        rgba(35, 55, 42, 0.85);
+
+    box-shadow:
+        0 0 20px rgba(216, 201, 134, 0.18),
+        0 0 50px rgba(216, 201, 134, 0.08);
+}
+
+
+/* Маленький трипільський знак */
+
+.symbol {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 25px;
+
+    opacity: 0.85;
+}
+
+
+/* Після натискання */
+
+.fade-out {
+
+    animation:
+        disappear 2s ease forwards;
+}
+
+
+@keyframes disappear {
+
+    from {
+        opacity: 1;
     }
 
-    body {
-      background:
-        radial-gradient(circle at center, #101d32 0%, #050a13 55%, #010308 100%);
-      color: #e8edf5;
-      font-family: Georgia, "Times New Roman", serif;
-      overflow: hidden;
+    to {
+        opacity: 0;
+    }
+}
+
+
+/* Мобільні */
+
+@media (max-width: 600px) {
+
+    .intro {
+        padding: 20px;
     }
 
-    .screen {
-      width: 100vw;
-      height: 100vh;
-      min-height: 600px;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      text-align: center;
-      padding: 30px;
-
-      position: relative;
-    }
-
-    .title {
-      font-size: clamp(32px, 5vw, 64px);
-      font-weight: normal;
-      letter-spacing: 2px;
-      margin: 0 0 18px;
-
-      opacity: 0;
-      animation: appear 3s ease forwards;
-    }
-
-    .subtitle {
-      font-size: clamp(18px, 2.2vw, 28px);
-      color: #b8c6d9;
-      letter-spacing: 1px;
-      margin: 0;
-
-      opacity: 0;
-      animation: appear 3s ease 1.5s forwards;
+    .line {
+        font-size: clamp(25px, 7vw, 38px);
+        letter-spacing: 1px;
     }
 
     .enter-button {
-      margin-top: 55px;
-
-      padding: 18px 36px;
-
-      border: 1px solid rgba(220, 190, 100, 0.7);
-      border-radius: 50px;
-
-      background: rgba(10, 20, 35, 0.75);
-      color: #f0d77a;
-
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 19px;
-      letter-spacing: 1px;
-
-      cursor: pointer;
-
-      opacity: 0;
-      animation: appear 3s ease 3s forwards;
-
-      transition:
-        background 0.5s ease,
-        box-shadow 0.5s ease,
-        transform 0.5s ease;
-    }
-
-    .enter-button:hover {
-      background: rgba(45, 65, 80, 0.85);
-
-      box-shadow:
-        0 0 20px rgba(240, 215, 122, 0.25),
-        0 0 50px rgba(240, 215, 122, 0.1);
-
-      transform: scale(1.04);
-    }
-
-    .tripillian-symbol {
-      display: block;
-      font-size: 28px;
-      margin-bottom: 6px;
-    }
-
-    .fade-out {
-      animation: disappear 1.5s ease forwards;
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes disappear {
-      from {
-        opacity: 1;
-      }
-
-      to {
-        opacity: 0;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .screen {
-        padding: 20px;
-      }
-
-      .enter-button {
         font-size: 17px;
-        padding: 16px 28px;
-      }
+        padding: 15px 27px;
     }
-  </style>
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-  <main class="screen" id="intro">
+<div class="forest"></div>
+<div class="fog"></div>
 
-    <h1 class="title">
-      Стежка до власної квітки папороті
-    </h1>
 
-    <p class="subtitle">
-      Символічна мандрівка до власного глибинного джерела
-    </p>
+<main class="intro" id="intro">
 
-    <button class="enter-button" id="startButton">
-      <span class="tripillian-symbol">𒀭</span>
-      🌲 Зайти до темного лісу
+    <div class="story">
+
+        <div class="line" data-time="5000">
+            Кажуть
+        </div>
+
+        <div class="line" data-time="5000">
+            квітки папороті не існує
+        </div>
+
+        <div class="line" data-time="5000">
+            але деякі стежки
+        </div>
+
+        <div class="line" data-time="6500">
+            ведуть тебе у темряву твоїх страхів
+        </div>
+
+        <div class="line" data-time="7000">
+            саме така подорож
+        </div>
+
+        <div class="line" data-time="5000">
+            винагороджує тебе
+        </div>
+
+        <div class="line final-line" data-time="7000">
+            квіткою папороті
+        </div>
+
+    </div>
+
+
+    <button
+        class="enter-button"
+        id="startButton"
+    >
+
+        <span class="symbol">𒀭</span>
+
+        Увійти до стежки
+
     </button>
 
-  </main>
+</main>
 
-  <script>
-    const startButton = document.getElementById("startButton");
-    const intro = document.getElementById("intro");
 
-    startButton.addEventListener("click", () => {
-      intro.classList.add("fade-out");
+<script>
 
-      setTimeout(() => {
-        alert("Тут почнеться подорож до темного лісу 🌲");
-      }, 1500);
-    });
-  </script>
+
+/* --------------------------------
+   ТЕКСТ
+-------------------------------- */
+
+const lines =
+    Array.from(
+        document.querySelectorAll(".line")
+    );
+
+const button =
+    document.getElementById("startButton");
+
+const intro =
+    document.getElementById("intro");
+
+
+/* --------------------------------
+   ЗВУК ШЕЛЕСТІННЯ ЛИСТЯ
+   Створюється прямо в браузері.
+   Окремий аудіофайл не потрібен.
+-------------------------------- */
+
+let audioContext;
+
+
+function createLeafSound() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
+
+
+    const duration = 0.8;
+
+    const buffer =
+        audioContext.createBuffer(
+            1,
+            audioContext.sampleRate * duration,
+            audioContext.sampleRate
+        );
+
+
+    const data =
+        buffer.getChannelData(0);
+
+
+    for (
+        let i = 0;
+        i < data.length;
+        i++
+    ) {
+
+        const fade =
+            Math.sin(
+                Math.PI *
+                i /
+                data.length
+            );
+
+        data[i] =
+            (
+                Math.random() * 2 - 1
+            ) *
+            fade *
+            0.22;
+
+    }
+
+
+    const source =
+        audioContext.createBufferSource();
+
+    source.buffer = buffer;
+
+
+    const filter =
+        audioContext.createBiquadFilter();
+
+    filter.type = "bandpass";
+
+    filter.frequency.value = 1800;
+
+    filter.Q.value = 0.7;
+
+
+    const gain =
+        audioContext.createGain();
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.055,
+        audioContext.currentTime + 0.12
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        audioContext.currentTime + duration
+    );
+
+
+    source
+        .connect(filter)
+        .connect(gain)
+        .connect(audioContext.destination);
+
+
+    source.start();
+
+}
+
+
+/* --------------------------------
+   ПОЯВА ФРАЗ
+-------------------------------- */
+
+function showLine(index) {
+
+    if (index >= lines.length) {
+
+        setTimeout(() => {
+
+            button.classList.add("show");
+
+        }, 1200);
+
+        return;
+    }
+
+
+    const line =
+        lines[index];
+
+
+    /* шелест перед появою */
+
+    createLeafSound();
+
+
+    /* фраза */
+
+    line.classList.remove("hidden");
+
+    line.classList.add("visible");
+
+
+    const time =
+        Number(
+            line.dataset.time
+        );
+
+
+    setTimeout(() => {
+
+        line.classList.remove("visible");
+
+        line.classList.add("hidden");
+
+
+        setTimeout(() => {
+
+            showLine(index + 1);
+
+        }, 1600);
+
+
+    }, time);
+
+}
+
+
+/* --------------------------------
+   ПОЧАТОК
+-------------------------------- */
+
+setTimeout(() => {
+
+    showLine(0);
+
+}, 1800);
+
+
+/* --------------------------------
+   КНОПКА
+-------------------------------- */
+
+button.addEventListener(
+    "click",
+    () => {
+
+        intro.classList.add("fade-out");
+
+
+        /*
+           Тут пізніше підключимо
+           справжній перехід
+           до темного лісу.
+        */
+
+        setTimeout(() => {
+
+            console.log(
+                "Починається подорож до темного лісу"
+            );
+
+        }, 2000);
+
+    }
+);
+
+</script>
 
 </body>
 </html>
