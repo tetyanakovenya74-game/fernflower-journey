@@ -54,25 +54,121 @@ body {
 .forest {
     position: fixed;
     inset: 0;
+    pointer-events: none;
+    opacity: 0;
+
+    overflow: hidden;
 
     background:
-
         radial-gradient(
-            ellipse at center,
-            rgba(180, 166, 103, 0.10) 0%,
-            rgba(50, 80, 57, 0.10) 25%,
-            transparent 60%
-        ),
-
-        radial-gradient(
-            ellipse at 50% 40%,
-            rgba(220, 194, 108, 0.05),
-            transparent 35%
+            ellipse at 50% 55%,
+            rgba(52, 79, 53, 0.30) 0%,
+            rgba(16, 31, 21, 0.45) 30%,
+            rgba(3, 9, 6, 0.88) 68%,
+            #000 100%
         );
 
-    pointer-events: none;
+    transform: scale(1);
+    transition:
+        opacity 4s ease,
+        transform 18s ease-out;
 }
 
+/* Далекий ліс */
+.forest::before {
+    content: "";
+    position: absolute;
+    inset: -12%;
+
+    background:
+        linear-gradient(
+            78deg,
+            transparent 0 12%,
+            rgba(2, 8, 5, 0.88) 13% 16%,
+            transparent 17% 24%,
+            rgba(3, 10, 6, 0.82) 25% 28%,
+            transparent 29% 39%,
+            rgba(2, 8, 5, 0.78) 40% 43%,
+            transparent 44% 57%,
+            rgba(2, 8, 5, 0.80) 58% 62%,
+            transparent 63% 73%,
+            rgba(2, 8, 5, 0.90) 74% 78%,
+            transparent 79%
+        );
+
+    filter: blur(1px);
+
+    transform:
+        scale(1.15)
+        translateZ(0);
+
+    opacity: 0.9;
+
+    animation:
+        forestDepth 20s ease-in-out infinite alternate;
+}
+
+/* Ближні дерева по краях */
+.forest::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+
+    background:
+        linear-gradient(
+            72deg,
+            rgba(0, 3, 2, 0.98) 0 10%,
+            transparent 11% 18%,
+            rgba(0, 3, 2, 0.94) 19% 25%,
+            transparent 26% 73%,
+            rgba(0, 3, 2, 0.94) 74% 80%,
+            transparent 81% 89%,
+            rgba(0, 3, 2, 0.98) 90% 100%
+        );
+
+    transform: scale(1.08);
+
+    opacity: 0.92;
+
+    animation:
+        forestWalk 14s ease-in-out infinite alternate;
+}
+
+@keyframes forestDepth {
+
+    from {
+        transform:
+            scale(1.12)
+            translate3d(-1%, 0, 0);
+    }
+
+    to {
+        transform:
+            scale(1.22)
+            translate3d(1%, -1%, 0);
+    }
+}
+
+@keyframes forestWalk {
+
+    from {
+        transform:
+            scale(1.05)
+            translate3d(-0.5%, 0, 0);
+    }
+
+    to {
+        transform:
+            scale(1.16)
+            translate3d(0.5%, -1%, 0);
+    }
+}
+
+/* Ліс оживає після входу */
+body.forest-active .forest {
+    opacity: 1;
+    transform: scale(1.08);
+}
 
 /* --------------------------------
    ТУМАН
@@ -1154,29 +1250,28 @@ button.addEventListener(
     "click",
     () => {
 
-        unlockSound();
-
+        unlockAudio();
 
         intro.classList.add(
             "fade-out"
         );
 
-
         setTimeout(
             () => {
+
+                document.body.classList.add(
+                    "forest-active"
+                );
 
                 console.log(
                     "Починається подорож до темного лісу"
                 );
 
             },
-
-            2500
+            1800
         );
-
     }
 );
-
 
 </script>
 
