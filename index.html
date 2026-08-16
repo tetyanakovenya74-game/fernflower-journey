@@ -887,119 +887,86 @@ function unlockSound() {
 -------------------------------- */
 
 function createLeafSound() {
-
     if (!audioContext) return;
 
-    if (
-        audioContext.state ===
-        "suspended"
-    ) {
-
+    if (audioContext.state === "suspended") {
         audioContext.resume();
-
     }
 
+    const duration = 3.2;
+    const bufferSize = audioContext.sampleRate * duration;
+    const buffer = audioContext.createBuffer(
+        1,
+        bufferSize,
+        audioContext.sampleRate
+    );
 
-    const duration = 0.75;
+    const data = buffer.getChannelData(0);
 
+    // М'який природний шум, схожий на шелест листя
+    let last = 0;
 
-    const buffer =
-        audioContext.createBuffer(
-            1,
-            audioContext.sampleRate *
-            duration,
-            audioContext.sampleRate
-        );
+    for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
 
+        // Згладжуємо шум, щоб він не був схожий на радіоперешкоди
+        last = last * 0.96 + white * 0.04;
 
-    const data =
-        buffer.getChannelData(0);
+        // Додаємо легкі нерівномірні пориви
+        const wave = Math.sin(i / audioContext.sampleRate * 7.5);
+        const rustle = 0.65 + wave * 0.25;
 
-
-    for (
-        let i = 0;
-        i < data.length;
-        i++
-    ) {
-
-        const fade =
-            Math.sin(
-                Math.PI *
-                i /
-                data.length
-            );
-
-        data[i] =
-            (
-                Math.random() * 2 - 1
-            )
-            *
-            fade
-            *
-            0.42;
-
+        data[i] = last * rustle * 5;
     }
 
+    const source = audioContext.createBufferSource();
+    source.buffer = buffer;
 
-    const source =
-        audioContext.createBufferSource();
+    // Основний фільтр шелесту
+    const filter = audioContext.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.value = 1700;
+    filter.Q.value = 0.7;
 
-    source.buffer =
-        buffer;
+    // Додатковий фільтр прибирає різкість
+    const highpass = audioContext.createBiquadFilter();
+    highpass.type = "highpass";
+    highpass.frequency.value = 500;
 
+    const gain = audioContext.createGain();
 
-    const filter =
-        audioContext.createBiquadFilter();
-
-    filter.type =
-        "bandpass";
-
-    filter.frequency.value =
-        2100;
-
-    filter.Q.value =
-        0.65;
-
-
-    const gain =
-        audioContext.createGain();
-
-
-    const now =
-        audioContext.currentTime;
-
-
-    gain.gain.setValueAtTime(
-        0.0001,
-        now
+    // Плавна поява
+    gain.gain.setValueAtTime(0.001, audioContext.currentTime);
+    gain.gain.linearRampToValueAtTime(
+        0.12,
+        audioContext.currentTime + 0.35
     );
 
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.13,
-        now + 0.10
+    // Невеликі природні коливання гучності
+    gain.gain.linearRampToValueAtTime(
+        0.07,
+        audioContext.currentTime + 1.2
     );
 
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        now + duration
+    gain.gain.linearRampToValueAtTime(
+        0.11,
+        audioContext.currentTime + 2.0
     );
 
+    // Плавне згасання
+    gain.gain.linearRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + duration
+    );
 
     source
+        .connect(highpass)
         .connect(filter)
         .connect(gain)
-        .connect(
-            audioContext.destination
-        );
-
+        .connect(audioContext.destination);
 
     source.start();
-
 }
-
-
 /* --------------------------------
    ПОЯВА ЛІТЕР
 -------------------------------- */
