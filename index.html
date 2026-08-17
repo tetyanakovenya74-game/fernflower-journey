@@ -72,66 +72,90 @@ body {
     transition:
         opacity 4s ease,
         transform 18s ease-out;
-}
-
-/* Далекий ліс */
+}/* Ліс навколо дороги */
 .forest::before {
     content: "";
     position: absolute;
-    inset: -12%;
+    inset: -10%;
+    z-index: 1;
+    pointer-events: none;
 
     background:
+        /* ліві далекі дерева */
         linear-gradient(
             78deg,
-            transparent 0 12%,
-            rgba(2, 8, 5, 0.88) 13% 16%,
-            transparent 17% 24%,
-            rgba(3, 10, 6, 0.82) 25% 28%,
-            transparent 29% 39%,
-            rgba(2, 8, 5, 0.78) 40% 43%,
-            transparent 44% 57%,
-            rgba(2, 8, 5, 0.80) 58% 62%,
-            transparent 63% 73%,
-            rgba(2, 8, 5, 0.90) 74% 78%,
-            transparent 79%
+            rgba(2, 8, 5, 0.96) 0%,
+            rgba(2, 8, 5, 0.92) 8%,
+            transparent 18%
+        ),
+
+        /* праві далекі дерева */
+        linear-gradient(
+            102deg,
+            rgba(2, 8, 5, 0.96) 0%,
+            rgba(2, 8, 5, 0.92) 8%,
+            transparent 18%
+        ),
+
+        /* темний край лісу */
+        linear-gradient(
+            90deg,
+            rgba(0, 4, 2, 0.98) 0%,
+            transparent 22%,
+            transparent 78%,
+            rgba(0, 4, 2, 0.98) 100%
         );
 
-    filter: blur(1px);
-
-    transform:
-        scale(1.15)
-        translateZ(0);
-
     opacity: 0.9;
-
-    animation:
-        forestDepth 20s ease-in-out infinite alternate;
 }
 
-/* Ближні дерева по краях */
+
+/* Передній план: стовбури з боків */
 .forest::after {
     content: "";
     position: absolute;
-    inset: -20%;
+    inset: -15%;
+    z-index: 2;
+    pointer-events: none;
 
     background:
+        /* лівий великий стовбур */
         linear-gradient(
-            72deg,
-            rgba(0, 3, 2, 0.98) 0 10%,
-            transparent 11% 18%,
-            rgba(0, 3, 2, 0.94) 19% 25%,
-            transparent 26% 73%,
-            rgba(0, 3, 2, 0.94) 74% 80%,
-            transparent 81% 89%,
-            rgba(0, 3, 2, 0.98) 90% 100%
+            76deg,
+            rgba(0, 3, 2, 0.98) 0%,
+            rgba(1, 7, 4, 0.96) 8%,
+            transparent 16%
+        ),
+
+        /* ще один лівий стовбур */
+        linear-gradient(
+            83deg,
+            transparent 0%,
+            transparent 16%,
+            rgba(2, 9, 5, 0.82) 20%,
+            rgba(2, 9, 5, 0.72) 24%,
+            transparent 30%
+        ),
+
+        /* правий великий стовбур */
+        linear-gradient(
+            104deg,
+            rgba(0, 3, 2, 0.98) 0%,
+            rgba(1, 7, 4, 0.96) 8%,
+            transparent 16%
+        ),
+
+        /* ще один правий стовбур */
+        linear-gradient(
+            97deg,
+            transparent 0%,
+            transparent 70%,
+            rgba(2, 9, 5, 0.82) 76%,
+            rgba(2, 9, 5, 0.72) 80%,
+            transparent 86%
         );
 
-    transform: scale(1.08);
-
     opacity: 0.92;
-
-    animation:
-        forestWalk 14s ease-in-out infinite alternate;
 }
 
 @keyframes forestDepth {
