@@ -837,7 +837,201 @@ body.journey-start .forest::after {
     }
 
 }
+/* =========================================
+   НОВИЙ ВИДИМИЙ ЛІС
+   ========================================= */
 
+.forest {
+    background:
+        radial-gradient(
+            ellipse at 50% 52%,
+            rgba(55, 86, 58, 0.42) 0%,
+            rgba(20, 40, 27, 0.55) 32%,
+            rgba(4, 12, 8, 0.90) 72%,
+            #000 100%
+        );
+}
+
+/* Дерева вдалині */
+.forest::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: 1;
+    pointer-events: none;
+
+    background:
+
+        /* ліве далеке дерево */
+        linear-gradient(
+            78deg,
+            transparent 0%,
+            transparent 14%,
+            rgba(15, 29, 19, 0.75) 15%,
+            rgba(25, 45, 28, 0.65) 18%,
+            transparent 21%
+        ),
+
+        /* ще одне ліворуч */
+        linear-gradient(
+            83deg,
+            transparent 0%,
+            transparent 24%,
+            rgba(12, 27, 17, 0.65) 25%,
+            rgba(22, 42, 25, 0.58) 28%,
+            transparent 31%
+        ),
+
+        /* дерево біля центру зліва */
+        linear-gradient(
+            87deg,
+            transparent 0%,
+            transparent 34%,
+            rgba(18, 38, 23, 0.48) 35%,
+            rgba(28, 50, 30, 0.42) 38%,
+            transparent 41%
+        ),
+
+        /* дерево біля центру справа */
+        linear-gradient(
+            94deg,
+            transparent 0%,
+            transparent 59%,
+            rgba(25, 45, 27, 0.42) 60%,
+            rgba(17, 36, 22, 0.50) 63%,
+            transparent 66%
+        ),
+
+        /* праве далеке дерево */
+        linear-gradient(
+            99deg,
+            transparent 0%,
+            transparent 73%,
+            rgba(15, 31, 19, 0.65) 74%,
+            rgba(25, 45, 27, 0.72) 78%,
+            transparent 81%
+        ),
+
+        /* крайній правий ліс */
+        linear-gradient(
+            103deg,
+            transparent 0%,
+            transparent 86%,
+            rgba(10, 24, 15, 0.80) 87%,
+            rgba(18, 36, 22, 0.75) 91%,
+            transparent 94%
+        );
+
+    opacity: 1;
+    transform-origin: center center;
+}
+
+
+/* Передні стовбури */
+.forest::after {
+    content: "";
+    position: absolute;
+    inset: -25%;
+    z-index: 2;
+    pointer-events: none;
+
+    background:
+
+        /* великий лівий стовбур */
+        linear-gradient(
+            76deg,
+            rgba(2, 7, 4, 0.95) 0%,
+            rgba(5, 15, 9, 0.92) 11%,
+            transparent 20%
+        ),
+
+        /* другий лівий */
+        linear-gradient(
+            82deg,
+            transparent 8%,
+            transparent 19%,
+            rgba(7, 19, 11, 0.82) 21%,
+            rgba(12, 28, 16, 0.72) 25%,
+            transparent 29%
+        ),
+
+        /* великий правий стовбур */
+        linear-gradient(
+            104deg,
+            rgba(2, 7, 4, 0.95) 0%,
+            rgba(5, 15, 9, 0.92) 10%,
+            transparent 19%
+        ),
+
+        /* другий правий */
+        linear-gradient(
+            98deg,
+            transparent 70%,
+            transparent 75%,
+            rgba(7, 19, 11, 0.82) 77%,
+            rgba(12, 28, 16, 0.72) 81%,
+            transparent 86%
+        );
+
+    opacity: 0.95;
+    transform-origin: center center;
+}
+
+
+/* Рух камери вперед */
+body.journey-start .forest {
+    opacity: 1;
+    transform: scale(1.55);
+    transform-origin: center center;
+
+    transition:
+        opacity 3s ease,
+        transform 20s cubic-bezier(.25,.65,.35,1);
+}
+
+body.journey-start .forest::before {
+    animation:
+        forestDepthJourney 20s ease-in forwards;
+}
+
+body.journey-start .forest::after {
+    animation:
+        forestWalkJourney 20s ease-in forwards;
+}
+
+
+/* Глибина далекого лісу */
+@keyframes forestDepthJourney {
+
+    from {
+        transform:
+            scale(1.0)
+            translate3d(0, 0, 0);
+    }
+
+    to {
+        transform:
+            scale(1.55)
+            translate3d(0, -2%, 0);
+    }
+}
+
+
+/* Рух передніх стовбурів */
+@keyframes forestWalkJourney {
+
+    from {
+        transform:
+            scale(1.0)
+            translate3d(0, 0, 0);
+    }
+
+    to {
+        transform:
+            scale(1.75)
+            translate3d(0, -3%, 0);
+    }
+}
 </style>
 
 </head>
