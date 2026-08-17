@@ -193,7 +193,59 @@ body.forest-active .forest {
     opacity: 1;
     transform: scale(1.08);
 }
+/* --------------------------------
+   РУХ УГЛИБ ЛІСУ
+-------------------------------- */
 
+body.journey-start .forest {
+    opacity: 1;
+    transform: scale(1.45);
+    transition:
+        opacity 4s ease,
+        transform 18s ease-in;
+}
+
+body.journey-start .forest::before {
+    animation:
+        forestDepthJourney 18s ease-in forwards;
+}
+
+body.journey-start .forest::after {
+    animation:
+        forestWalkJourney 18s ease-in forwards;
+}
+
+@keyframes forestDepthJourney {
+
+    from {
+        transform:
+            scale(1.12)
+            translate3d(-1%, 0, 0);
+    }
+
+    to {
+        transform:
+            scale(1.65)
+            translate3d(0, -2%, 0);
+    }
+
+}
+
+@keyframes forestWalkJourney {
+
+    from {
+        transform:
+            scale(1.05)
+            translate3d(-0.5%, 0, 0);
+    }
+
+    to {
+        transform:
+            scale(1.55)
+            translate3d(0, -3%, 0);
+    }
+
+}
 /* --------------------------------
    ТУМАН
 -------------------------------- */
@@ -1276,27 +1328,21 @@ button.addEventListener(
 
         unlockSound();
 
-        intro.classList.add(
-            "fade-out"
-        );
+        intro.classList.add("fade-out");
 
-        setTimeout(
-            () => {
+        setTimeout(() => {
 
-                document.body.classList.add(
-                    "forest-active"
-                );
+            document.body.classList.add("forest-active");
 
-                console.log(
-                    "Починається подорож до темного лісу"
-                );
+            // Починаємо рух углиб лісу
+            document.body.classList.add("journey-start");
 
-            },
-            1800
-        );
+            console.log("Починається подорож до темного лісу");
+
+        }, 1800);
+
     }
 );
-
 </script>
 
 
