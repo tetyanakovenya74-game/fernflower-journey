@@ -1343,7 +1343,26 @@ button.addEventListener(
 
     }
 );
-</script>
+// Запуск лісу після натискання кнопки "Увійти"
+document.addEventListener("DOMContentLoaded", () => {
+    const enterButton = document.querySelector("button");
+
+    if (!enterButton) {
+        console.log("Кнопку не знайдено");
+        return;
+    }
+
+    enterButton.addEventListener("click", () => {
+        console.log("КНОПКА НАТИСНУТА");
+
+        document.body.classList.add("forest-active");
+
+        setTimeout(() => {
+            document.body.classList.add("journey-start");
+            console.log("ПОДОРОЖ ДО ЛІСУ ПОЧАЛАСЯ");
+        }, 100);
+    });
+});</script>
 
 
 </body>
