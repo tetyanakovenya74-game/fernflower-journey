@@ -1,0 +1,229 @@
+/* =========================================
+   ШРИФТ РУТЕНІЯ
+   ========================================= */
+
+/*
+   Поклади файл шрифту сюди:
+
+   fonts/Rutenia.woff2
+
+   Якщо файл має іншу назву, зміни її нижче.
+*/
+
+@font-face {
+    font-family: "Rutenia";
+    src: url("fonts/Rutenia.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* =========================================
+   ОСНОВА
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #122c2b 0%,
+            #0d2525 32%,
+            #071a1c 68%,
+            #041216 100%
+        );
+
+    color: #d7c98b;
+}
+
+
+/* =========================================
+   СЦЕНА
+   ========================================= */
+
+.scene {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(26, 59, 56, 0.42) 0%,
+            rgba(12, 37, 37, 0.20) 45%,
+            rgba(2, 13, 17, 0.48) 100%
+        );
+}
+
+
+/*
+   Ледь помітне затемнення країв.
+*/
+
+.scene::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 35%,
+            rgba(0, 8, 12, 0.22) 70%,
+            rgba(0, 6, 9, 0.62) 100%
+        );
+}
+
+
+/* =========================================
+   ТЕКСТ
+   ========================================= */
+
+.intro-text {
+    position: relative;
+    z-index: 2;
+
+    width: min(90vw, 900px);
+
+    text-align: center;
+
+    font-family: "Rutenia", serif;
+
+    font-size: clamp(30px, 4vw, 58px);
+
+    line-height: 1.35;
+
+    letter-spacing: 0.025em;
+
+    text-shadow:
+        0 0 10px rgba(199, 183, 105, 0.08);
+
+}
+
+
+/* =========================================
+   ОКРЕМІ РЯДКИ
+   ========================================= */
+
+.line {
+    opacity: 0;
+
+    transform:
+        translateY(10px);
+
+    filter: blur(4px);
+
+    transition:
+        opacity 1.4s ease,
+        transform 1.4s ease,
+        filter 1.4s ease;
+
+    margin: 0.12em 0;
+}
+
+
+/*
+   Активний рядок.
+*/
+
+.line.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+
+    filter: blur(0);
+}
+
+
+/* =========================================
+   ОСТАННІ СЛОВА
+   ========================================= */
+
+.final-line {
+    margin-top: 0.35em;
+
+    color: #e0d394;
+
+    letter-spacing: 0.035em;
+}
+
+
+/*
+   Після появи текст починає дуже повільно світитися.
+*/
+
+.final-line.glowing span {
+
+    animation:
+        fernGlow 3.5s ease-in-out forwards;
+
+}
+
+
+@keyframes fernGlow {
+
+    0% {
+        text-shadow:
+            0 0 5px rgba(221, 204, 119, 0.15);
+    }
+
+    35% {
+        text-shadow:
+            0 0 12px rgba(221, 204, 119, 0.35);
+    }
+
+    70% {
+        text-shadow:
+            0 0 24px rgba(229, 214, 137, 0.65),
+            0 0 45px rgba(182, 165, 82, 0.25);
+    }
+
+    100% {
+        text-shadow:
+            0 0 18px rgba(229, 214, 137, 0.55),
+            0 0 38px rgba(182, 165, 82, 0.22);
+    }
+
+}
+
+
+/* =========================================
+   ТЕЛЕФОН
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .intro-text {
+        width: 88vw;
+
+        font-size: clamp(25px, 7vw, 38px);
+
+        line-height: 1.4;
+    }
+
+}
