@@ -1,20 +1,15 @@
 /* =========================================
-   ШРИФТ РУТЕНІЯ
+   РУТЕНІЯ
    ========================================= */
-
-/*
-   Поклади файл шрифту сюди:
-
-   fonts/Rutenia.woff2
-
-   Якщо файл має іншу назву, зміни її нижче.
-*/
 
 @font-face {
     font-family: "Rutenia";
+
     src: url("fonts/Rutenia.woff2") format("woff2");
+
     font-weight: normal;
     font-style: normal;
+
     font-display: swap;
 }
 
@@ -31,6 +26,7 @@ html,
 body {
     width: 100%;
     height: 100%;
+
     margin: 0;
     padding: 0;
 }
@@ -41,13 +37,13 @@ body {
     background:
         radial-gradient(
             ellipse at center,
-            #122c2b 0%,
-            #0d2525 32%,
-            #071a1c 68%,
+            #173432 0%,
+            #102927 35%,
+            #091c1e 68%,
             #041216 100%
         );
 
-    color: #d7c98b;
+    color: #d9cb91;
 }
 
 
@@ -70,21 +66,20 @@ body {
     background:
         radial-gradient(
             ellipse at center,
-            rgba(26, 59, 56, 0.42) 0%,
-            rgba(12, 37, 37, 0.20) 45%,
-            rgba(2, 13, 17, 0.48) 100%
+            rgba(32, 69, 64, 0.30) 0%,
+            rgba(12, 38, 37, 0.15) 45%,
+            rgba(2, 13, 16, 0.50) 100%
         );
 }
 
 
-/*
-   Ледь помітне затемнення країв.
-*/
+/* затемнення країв */
 
 .scene::after {
     content: "";
 
     position: absolute;
+
     inset: 0;
 
     pointer-events: none;
@@ -92,22 +87,23 @@ body {
     background:
         radial-gradient(
             ellipse at center,
-            transparent 35%,
-            rgba(0, 8, 12, 0.22) 70%,
-            rgba(0, 6, 9, 0.62) 100%
+            transparent 30%,
+            rgba(0, 7, 10, 0.18) 65%,
+            rgba(0, 5, 8, 0.68) 100%
         );
 }
 
 
 /* =========================================
-   ТЕКСТ
+   БЛОК ТЕКСТУ
    ========================================= */
 
 .intro-text {
     position: relative;
+
     z-index: 2;
 
-    width: min(90vw, 900px);
+    width: min(90vw, 1000px);
 
     text-align: center;
 
@@ -118,37 +114,33 @@ body {
     line-height: 1.35;
 
     letter-spacing: 0.025em;
-
-    text-shadow:
-        0 0 10px rgba(199, 183, 105, 0.08);
-
 }
 
 
 /* =========================================
-   ОКРЕМІ РЯДКИ
+   ОКРЕМИЙ РЯДОК
    ========================================= */
 
 .line {
+    height: 1.35em;
+
+    margin: 0;
+
     opacity: 0;
 
     transform:
-        translateY(10px);
+        translateY(12px);
 
-    filter: blur(4px);
+    filter: blur(5px);
 
     transition:
-        opacity 1.4s ease,
-        transform 1.4s ease,
-        filter 1.4s ease;
-
-    margin: 0.12em 0;
+        opacity 1.2s ease,
+        transform 1.2s ease,
+        filter 1.2s ease;
 }
 
 
-/*
-   Активний рядок.
-*/
+/* поява */
 
 .line.visible {
     opacity: 1;
@@ -160,27 +152,40 @@ body {
 }
 
 
+/* зникнення */
+
+.line.fade-out {
+    opacity: 0;
+
+    transform:
+        translateY(-10px);
+
+    filter: blur(5px);
+
+    transition:
+        opacity 1.4s ease,
+        transform 1.4s ease,
+        filter 1.4s ease;
+}
+
+
 /* =========================================
-   ОСТАННІ СЛОВА
+   «КВІТКОЮ ПАПОРОТІ»
    ========================================= */
 
 .final-line {
-    margin-top: 0.35em;
-
-    color: #e0d394;
+    color: #ded092;
 
     letter-spacing: 0.035em;
 }
 
 
-/*
-   Після появи текст починає дуже повільно світитися.
-*/
+/* сяйво */
 
-.final-line.glowing span {
+.final-line.glowing {
 
     animation:
-        fernGlow 3.5s ease-in-out forwards;
+        fernGlow 4s ease-in-out forwards;
 
 }
 
@@ -188,42 +193,51 @@ body {
 @keyframes fernGlow {
 
     0% {
+
         text-shadow:
-            0 0 5px rgba(221, 204, 119, 0.15);
+            0 0 4px rgba(222, 208, 146, 0.15);
+
     }
 
     35% {
+
         text-shadow:
-            0 0 12px rgba(221, 204, 119, 0.35);
+            0 0 12px rgba(222, 208, 146, 0.35);
+
     }
 
     70% {
+
         text-shadow:
             0 0 24px rgba(229, 214, 137, 0.65),
             0 0 45px rgba(182, 165, 82, 0.25);
+
     }
 
     100% {
-        text-shadow:
-            0 0 18px rgba(229, 214, 137, 0.55),
-            0 0 38px rgba(182, 165, 82, 0.22);
-    }
 
+        text-shadow:
+            0 0 18px rgba(229, 214, 137, 0.60),
+            0 0 42px rgba(182, 165, 82, 0.25);
+
+    }
 }
 
 
 /* =========================================
-   ТЕЛЕФОН
+   МОБІЛЬНІ ПРИСТРОЇ
    ========================================= */
 
 @media (max-width: 600px) {
 
     .intro-text {
+
         width: 88vw;
 
         font-size: clamp(25px, 7vw, 38px);
 
         line-height: 1.4;
+
     }
 
 }
