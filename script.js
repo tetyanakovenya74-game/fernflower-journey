@@ -5,25 +5,18 @@
 
 
 /* =========================================
-   РЯДКИ
+   ЕЛЕМЕНТИ
    ========================================= */
 
-const lines = [
-    document.getElementById("line1"),
-    document.getElementById("line2"),
-    document.getElementById("line3"),
-    document.getElementById("line4"),
-    document.getElementById("line5"),
-    document.getElementById("line6"),
-    document.getElementById("line7"),
-    document.getElementById("line8"),
-    document.getElementById("line9")
+const startButton =
+    document.getElementById("startButton");
+
+const groups = [
+    document.getElementById("group1"),
+    document.getElementById("group2"),
+    document.getElementById("group3")
 ];
 
-
-/* =========================================
-   ЗВУКИ
-   ========================================= */
 
 const leafSound1 =
     document.getElementById("leafSound1");
@@ -36,26 +29,21 @@ const gongSound =
 
 
 /* =========================================
-   ФУНКЦІЯ ЗВУКУ
+   ЗВУК
    ========================================= */
 
 function playSound(sound) {
 
     sound.currentTime = 0;
 
-    const promise = sound.play();
+    sound.play().catch((error) => {
 
-    if (promise !== undefined) {
+        console.log(
+            "Не вдалося відтворити звук:",
+            error
+        );
 
-        promise.catch(() => {
-
-            console.log(
-                "Браузер заблокував автоматичне відтворення звуку."
-            );
-
-        });
-
-    }
+    });
 }
 
 
@@ -63,75 +51,94 @@ function playSound(sound) {
    ПОКАЗ РЯДКА
    ========================================= */
 
-function showLine(index) {
+function showLine(line) {
 
-    lines[index].classList.remove("fade-out");
-
-    lines[index].classList.add("visible");
+    line.classList.add("visible");
 
     playSound(leafSound1);
 }
 
 
 /* =========================================
-   СХОВАТИ ГРУПУ
+   СХОВАТИ РЯДКИ ГРУПИ
    ========================================= */
 
-function hideGroup(start, end) {
+function hideLines(group) {
 
-    for (let i = start; i <= end; i++) {
+    const lines =
+        group.querySelectorAll(".line");
 
-        lines[i].classList.remove("visible");
+    lines.forEach((line) => {
 
-        lines[i].classList.add("fade-out");
+        line.classList.remove("visible");
 
-    }
+    });
 
 }
 
 
 /* =========================================
-   ПОКАЗАТИ ГРУПУ
+   ПОКАЗАТИ ПЕРШІ ДВА РЯДКИ
    ========================================= */
 
-function showGroup(start, end, delay) {
+function showFirstTwo(group) {
 
-    for (let i = start; i <= end; i++) {
+    const lines =
+        group.querySelectorAll(".line");
 
-        setTimeout(() => {
+    showLine(lines[0]);
 
-            showLine(i);
+    setTimeout(() => {
 
-        }, delay + (i - start) * 1700);
+        showLine(lines[1]);
 
-    }
+    }, 1700);
 
 }
 
 
 /* =========================================
-   ГРУПА 1
+   ПОКАЗ ТРЕТЬОГО РЯДКА
    ========================================= */
 
-function firstGroup() {
+function showThirdLine(group) {
+
+    const lines =
+        group.querySelectorAll(".line");
+
+    setTimeout(() => {
+
+        showLine(lines[2]);
+
+    }, 3400);
+
+}
+
+
+/* =========================================
+   ПЕРША ГРУПА
+   ========================================= */
+
+function playGroup1() {
+
+    const group = groups[0];
+
+    group.classList.add("active");
+
+    showFirstTwo(group);
+
+    showThirdLine(group);
+
 
     /*
-       Кажуть
-       що квітки папороті
-       не існує.
-    */
-
-    showGroup(0, 2, 0);
-
-
-    /*
-       Через приблизно 7 секунд
-       перша група зникає.
+       Після того як усі три рядки
+       побули разом на екрані,
+       група зникає.
     */
 
     setTimeout(() => {
 
-        hideGroup(0, 2);
+        group.classList.add("fade-out");
 
     }, 6500);
 
@@ -139,27 +146,23 @@ function firstGroup() {
 
 
 /* =========================================
-   ГРУПА 2
+   ДРУГА ГРУПА
    ========================================= */
 
-function secondGroup() {
+function playGroup2() {
 
-    /*
-       Але деякі стежки
-       ведуть тебе
-       у темряву твоїх страхів.
-    */
+    const group = groups[1];
 
-    showGroup(3, 5, 0);
+    group.classList.add("active");
 
+    showFirstTwo(group);
 
-    /*
-       Зникнення другої групи.
-    */
+    showThirdLine(group);
+
 
     setTimeout(() => {
 
-        hideGroup(3, 5);
+        group.classList.add("fade-out");
 
     }, 6500);
 
@@ -167,30 +170,41 @@ function secondGroup() {
 
 
 /* =========================================
-   ГРУПА 3
+   ТРЕТЯ ГРУПА
    ========================================= */
 
-function thirdGroup() {
+function playGroup3() {
+
+    const group = groups[2];
+
+    const lines =
+        group.querySelectorAll(".line");
+
+
+    group.classList.add("active");
+
 
     /*
-       І саме така подорож
-       винагороджує тебе
-       квіткою папороті
+       Перший рядок
     */
 
-    showLine(6);
+    showLine(lines[0]);
 
+
+    /*
+       Другий рядок
+    */
 
     setTimeout(() => {
 
-        showLine(7);
+        showLine(lines[1]);
 
     }, 1700);
 
 
     /*
-       Перед останніми словами
-       використовується другий шелест.
+       Спеціальний шелест
+       перед «квіткою папороті»
     */
 
     setTimeout(() => {
@@ -201,32 +215,29 @@ function thirdGroup() {
 
 
     /*
-       Після спеціального шелесту
-       з'являється:
-       «квіткою папороті»
+       Поява «квіткою папороті»
     */
 
     setTimeout(() => {
 
-        lines[8].classList.add("visible");
+        lines[2].classList.add("visible");
 
-    }, 3850);
+    }, 3900);
 
 
     /*
-       Слова починають світитися.
+       Сяйво
     */
 
     setTimeout(() => {
 
-        lines[8].classList.add("glowing");
+        lines[2].classList.add("glowing");
 
-    }, 5200);
+    }, 5000);
 
 
     /*
-       Після завершення сяйва
-       звучить гонг.
+       Перший гонг
     */
 
     setTimeout(() => {
@@ -239,50 +250,74 @@ function thirdGroup() {
 
 
 /* =========================================
-   ЗАПУСК УСІЄЇ СЦЕНИ
+   ЗАПУСК МАНДРІВКИ
    ========================================= */
 
-function startIntro() {
+function startJourney() {
+
+
+    /*
+       Кнопка зникає
+    */
+
+    startButton.classList.add("hide");
+
 
     /*
        Група 1
     */
 
-    firstGroup();
+    setTimeout(() => {
+
+        playGroup1();
+
+    }, 1200);
 
 
     /*
-       Група 2 починається після
-       завершення першої.
+       Група 2
     */
 
     setTimeout(() => {
 
-        secondGroup();
+        /*
+           Перед новою групою
+           прибираємо попередню.
+        */
 
-    }, 8200);
+        groups[0].classList.remove("active");
+
+        hideLines(groups[0]);
+
+
+        playGroup2();
+
+    }, 9700);
 
 
     /*
-       Група 3 починається після
-       завершення другої.
+       Група 3
     */
 
     setTimeout(() => {
 
-        thirdGroup();
+        groups[1].classList.remove("active");
 
-    }, 16400);
+        hideLines(groups[1]);
+
+
+        playGroup3();
+
+    }, 19400);
 
 }
 
 
 /* =========================================
-   ЗАПУСК
+   КНОПКА
    ========================================= */
 
-window.addEventListener("load", () => {
-
-    startIntro();
-
-});
+startButton.addEventListener(
+    "click",
+    startJourney
+);
