@@ -13,21 +13,49 @@
 
     <main id="introScene" class="scene">
 
+        <!-- КНОПКА ПОЧАТКУ -->
+        <button id="startButton" class="start-button">
+            🌿<br>
+            <span>Увійти на стежку</span>
+        </button>
+
+
+        <!-- ТЕКСТ -->
         <div class="intro-text">
 
-            <div class="line" id="line1">Кажуть</div>
-            <div class="line" id="line2">що квітки папороті</div>
-            <div class="line" id="line3">не існує.</div>
+            <!-- ПЕРША ТРІЙКА -->
+            <div class="text-group" id="group1">
 
-            <div class="line" id="line4">Але деякі стежки</div>
-            <div class="line" id="line5">ведуть тебе</div>
-            <div class="line" id="line6">у темряву твоїх страхів.</div>
+                <div class="line">Кажуть</div>
 
-            <div class="line" id="line7">І саме така подорож</div>
-            <div class="line" id="line8">винагороджує тебе</div>
+                <div class="line">що квітки папороті</div>
 
-            <div class="line final-line" id="line9">
-                квіткою папороті
+                <div class="line">не існує.</div>
+
+            </div>
+
+
+            <!-- ДРУГА ТРІЙКА -->
+            <div class="text-group" id="group2">
+
+                <div class="line">Але деякі стежки</div>
+
+                <div class="line">ведуть тебе</div>
+
+                <div class="line">у темряву твоїх страхів.</div>
+
+            </div>
+
+
+            <!-- ТРЕТЯ ТРІЙКА -->
+            <div class="text-group" id="group3">
+
+                <div class="line">І саме така подорож</div>
+
+                <div class="line">винагороджує тебе</div>
+
+                <div class="line final-line">квіткою папороті</div>
+
             </div>
 
         </div>
@@ -35,26 +63,25 @@
     </main>
 
 
-    <!-- ==============================
-         ЗВУКИ
-         ============================== -->
+    <!-- ЗВУКИ -->
+    <!--
+       Якщо аудіофайли лежать прямо в корені репозиторію,
+       залишаємо так.
+
+       Якщо вони знаходяться у папці sounds,
+       треба буде додати sounds/ перед назвою.
+    -->
 
     <audio id="leafSound1" preload="auto">
-        <source
-            src="sounds/foliage-rustle-of-leaves1.mp3"
-            type="audio/mpeg">
+        <source src="foliage-rustle-of-leaves1.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="leafSound2" preload="auto">
-        <source
-            src="sounds/foliage-rustle-of-leaves-2.mp3"
-            type="audio/mpeg">
+        <source src="foliage-rustle-of-leaves-2.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="gongSound" preload="auto">
-        <source
-            src="sounds/gong.mp3"
-            type="audio/mpeg">
+        <source src="gong.mp3" type="audio/mpeg">
     </audio>
 
 
