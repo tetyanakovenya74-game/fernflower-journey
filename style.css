@@ -269,14 +269,7 @@ body {
 
     pointer-events: none;
 }
-    opacity: 0;
-
-    transform:
-        translate(-50%, -50%)
-        scale(0.92);
-
-    pointer-events: none;
-}
+   
 
 
 /* =========================================
