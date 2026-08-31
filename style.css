@@ -566,3 +566,78 @@ body {
     }
 
 }
+/* =========================================
+   ФІНАЛЬНЕ НАЛАШТУВАННЯ ВСТУПНОГО ТЕКСТУ
+   ========================================= */
+
+.intro-text {
+    position: absolute !important;
+
+    left: 50% !important;
+    top: 50% !important;
+
+    width: 100% !important;
+    max-width: 1100px !important;
+
+    height: 280px !important;
+
+    transform: translate(-50%, -50%) !important;
+
+    text-align: center !important;
+
+    font-family: "Rutenia", serif !important;
+
+    font-size: clamp(42px, 4.2vw, 62px) !important;
+
+    line-height: 1.35 !important;
+
+    letter-spacing: 0.025em !important;
+}
+
+
+.text-group {
+    position: absolute !important;
+
+    left: 0 !important;
+    right: 0 !important;
+
+    top: 50% !important;
+
+    width: 100% !important;
+
+    transform: translateY(-50%) !important;
+
+    text-align: center !important;
+}
+
+
+.line {
+    width: 100% !important;
+
+    margin: 0 auto !important;
+
+    padding: 0 !important;
+
+    text-align: center !important;
+
+    font-family: "Rutenia", serif !important;
+
+    font-size: inherit !important;
+
+    line-height: 1.35 !important;
+}
+
+
+/* На невеликих екранах */
+
+@media (max-width: 600px) {
+
+    .intro-text {
+        width: 94vw !important;
+
+        height: 240px !important;
+
+        font-size: clamp(30px, 7vw, 42px) !important;
+    }
+
+}
