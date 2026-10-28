@@ -310,6 +310,12 @@ function startJourney() {
 
     }, 19400);
 
+    // Після вступу та останнього гонга показуємо запитання
+    setTimeout(() => {
+        document.getElementById("introScene").hidden = true;
+        document.getElementById("choiceScene").hidden = false;
+    }, 30500);
+
 }
 
 
