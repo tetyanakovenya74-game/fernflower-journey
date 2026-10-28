@@ -634,3 +634,129 @@ body {
     }
 
 }
+
+/* =================================
+   ЗАПИТАННЯ ТА ВИБІР
+================================= */
+
+[hidden] {
+    display: none !important;
+}
+
+.next-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(
+            ellipse at center,
+            #173634 0%,
+            #102a29 40%,
+            #041216 100%
+        );
+}
+
+.choice-panel {
+    width: min(760px, 94vw);
+    text-align: center;
+}
+
+.choice-question {
+    margin: 0 0 32px;
+    color: #e2d394;
+    font-family: "Rutenia", serif;
+    font-size: clamp(26px, 4vw, 44px);
+    line-height: 1.4;
+}
+
+.choice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.choice-button {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid rgba(202, 190, 126, 0.4);
+    border-radius: 8px;
+    background: rgba(4, 22, 23, 0.72);
+    color: #e8dfc8;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.choice-button:hover,
+.choice-button.selected {
+    background: rgba(79, 103, 73, 0.5);
+    border-color: #d8ca8e;
+}
+
+#enterForestButton {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+}
+
+#enterForestButton:hover {
+    transform: scale(1.025);
+}
+
+/* =================================
+   ПОДОРОЖ ТЕМНИМ ЛІСОМ
+================================= */
+
+.forest-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    overflow: hidden;
+    background: #041216;
+}
+
+.forest-scene img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.forest-scene img.visible {
+    opacity: 1;
+}
+
+#forestPrompt {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 90%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    text-align: center;
+    color: #e2d394;
+    font-family: "Rutenia", serif;
+    font-size: clamp(28px, 4vw, 48px);
+    text-shadow: 0 0 24px rgba(226, 211, 148, 0.7);
+    animation: promptAppear 3s ease both;
+}
+
+@keyframes promptAppear {
+    from {
+        opacity: 0;
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
