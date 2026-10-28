@@ -11,49 +11,7 @@
 
 <body>
 
-    <main id="introScene" class="scene">
-
-<section id="choiceScene" class="scene next-scene" hidden>
-    <div class="choice-panel">
-        <p class="choice-question">
-            Навіщо Тобі потрібна квітка папороті?
-        </p>
-
-        <div class="choice-list">
-            <button class="choice-button" data-answer="1">
-                Мене стримують страхи.
-            </button>
-
-            <button class="choice-button" data-answer="2">
-                Я відчуваю власну слабкість.
-            </button>
-
-            <button class="choice-button" data-answer="3">
-                Я розгубилася/-вся і не знаю, куди рухатися.
-            </button>
-
-            <button class="choice-button" data-answer="4">
-                Я ніби заважаю собі рухатися вперед.
-            </button>
-
-            <button class="choice-button" data-answer="5">
-                Я хочу краще зрозуміти себе.
-            </button>
-        </div>
-
-        <button id="enterForestButton" class="start-button" hidden>
-            <span>Увійти до лісу</span>
-        </button>
-    </div>
-</section>
-
-<section id="forestScene" class="scene forest-scene" hidden>
-    <img id="forestImage" alt="Темна лісова стежка">
-
-    <p id="forestPrompt" hidden>
-        Обери свою квітку папороті
-    </p>
-</section>
+   
 
         <!-- КНОПКА ПОЧАТКУ -->
        <button id="startButton" class="start-button">
@@ -102,7 +60,49 @@
         </div>
 
     </main>
+ <main id="introScene" class="scene">
 
+<section id="choiceScene" class="scene next-scene" hidden>
+    <div class="choice-panel">
+        <p class="choice-question">
+            Навіщо Тобі потрібна квітка папороті?
+        </p>
+
+        <div class="choice-list">
+            <button class="choice-button" data-answer="1">
+                Мене стримують страхи.
+            </button>
+
+            <button class="choice-button" data-answer="2">
+                Я відчуваю власну слабкість.
+            </button>
+
+            <button class="choice-button" data-answer="3">
+                Я розгубилася/-вся і не знаю, куди рухатися.
+            </button>
+
+            <button class="choice-button" data-answer="4">
+                Я ніби заважаю собі рухатися вперед.
+            </button>
+
+            <button class="choice-button" data-answer="5">
+                Я хочу краще зрозуміти себе.
+            </button>
+        </div>
+
+        <button id="enterForestButton" class="start-button" hidden>
+            <span>Увійти до лісу</span>
+        </button>
+    </div>
+</section>
+
+<section id="forestScene" class="scene forest-scene" hidden>
+    <img id="forestImage" alt="Темна лісова стежка">
+
+    <p id="forestPrompt" hidden>
+        Обери свою квітку папороті
+    </p>
+</section>
 
     <!-- ЗВУКИ -->
     <!--
