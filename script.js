@@ -327,3 +327,72 @@ startButton.addEventListener(
     "click",
     startJourney
 );
+
+/* =================================
+   ВИБІР ВІДПОВІДІ
+================================= */
+
+const choiceButtons = document.querySelectorAll(".choice-button");
+const enterForestButton = document.getElementById("enterForestButton");
+
+let selectedAnswer = null;
+
+choiceButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        selectedAnswer = button.dataset.answer;
+
+        choiceButtons.forEach((item) => {
+            item.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+        enterForestButton.hidden = false;
+    });
+});
+
+/* =================================
+   ВХІД ДО ЛІСУ
+================================= */
+
+enterForestButton.addEventListener("click", () => {
+    document.getElementById("choiceScene").hidden = true;
+
+    const forestScene = document.getElementById("forestScene");
+    const forestImage = document.getElementById("forestImage");
+    const forestPrompt = document.getElementById("forestPrompt");
+
+    forestScene.hidden = false;
+
+    const forestImages = Array.from(
+        { length: 12 },
+        (_, index) => `Темнийліс${index + 1}.png`
+    );
+
+    let currentImage = 0;
+
+    function showForestImage() {
+        forestImage.classList.remove("visible");
+        forestImage.src = forestImages[currentImage];
+
+        forestImage.onload = () => {
+            forestImage.classList.add("visible");
+        };
+
+        currentImage++;
+    }
+
+    showForestImage();
+
+    const forestTimer = setInterval(() => {
+        if (currentImage < forestImages.length) {
+            showForestImage();
+        } else {
+            clearInterval(forestTimer);
+
+            setTimeout(() => {
+                forestImage.classList.remove("visible");
+                forestPrompt.hidden = false;
+            }, 1800);
+        }
+    }, 1700);
+});
