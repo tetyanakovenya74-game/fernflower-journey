@@ -794,3 +794,18 @@ body {
         filter: blur(0);
     }
 }
+/* Остаточне розташування п'яти кнопок */
+.choice-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-areas:
+        "one three five"
+        "two four ." !important;
+    gap: 18px 20px !important;
+}
+
+.choice-button:nth-child(1) { grid-area: one !important; }
+.choice-button:nth-child(2) { grid-area: two !important; }
+.choice-button:nth-child(3) { grid-area: three !important; }
+.choice-button:nth-child(4) { grid-area: four !important; }
+.choice-button:nth-child(5) { grid-area: five !important; }
