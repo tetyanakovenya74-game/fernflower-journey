@@ -358,41 +358,57 @@ enterForestButton.addEventListener("click", () => {
     document.getElementById("choiceScene").hidden = true;
 
     const forestScene = document.getElementById("forestScene");
-    const forestImage = document.getElementById("forestImage");
-    const forestPrompt = document.getElementById("forestPrompt");
+    const forestObjects = document.getElementById("forestObjects");
+    const lightDrop = document.getElementById("lightDrop");
+    const chooseFlowerButton = document.getElementById("chooseFlowerButton");
 
     forestScene.hidden = false;
 
-    const forestImages = Array.from(
-        { length: 12 },
-        (_, index) => `Темнийліс${index + 1}.png`
-    );
+    // Очищуємо попередній вміст
+    forestObjects.innerHTML = "";
+    lightDrop.hidden = true;
+    chooseFlowerButton.hidden = true;
 
-    let currentImage = 0;
+    // Створюємо 12 образів лісу
+    for (let i = 0; i < 12; i++) {
+        const object = document.createElement("div");
+        const image = document.createElement("img");
 
-    function showForestImage() {
-        forestImage.classList.remove("visible");
-        forestImage.src = forestImages[currentImage];
+        object.className = "forest-object";
 
-        forestImage.onload = () => {
-            forestImage.classList.add("visible");
-        };
+        // Чергуємо лівий і правий бік стежки
+        object.classList.add(i % 2 === 0 ? "left-side" : "right-side");
 
-        currentImage++;
+        image.src = `Темнийліс${i + 1}.png`;
+        image.alt = "";
+
+        object.appendChild(image);
+
+        // Кожен наступний образ з'являється трохи пізніше
+        object.style.animationDelay = `${i * 3.5}s`;
+
+        // Невелика різниця у висоті створює природніший ліс
+        object.style.setProperty("--height", `${35 + (i % 4) * 8}%`);
+
+        forestObjects.appendChild(object);
     }
 
-    showForestImage();
+    // Наприкінці стежки з'являється крапля світла
+    setTimeout(() => {
+        lightDrop.hidden = false;
+        lightDrop.classList.add("approaching");
+    }, 49000);
 
-    const forestTimer = setInterval(() => {
-        if (currentImage < forestImages.length) {
-            showForestImage();
-        } else {
-            clearInterval(forestTimer);
+    // Крапля перетворюється на кнопку
+    setTimeout(() => {
+        lightDrop.classList.remove("approaching");
+        lightDrop.classList.add("becoming-button");
 
-            setTimeout(() => {
-                forestImage.classList.remove("visible");
-                forestPrompt.hidden = false;
-            }, 1800);
-        }
-    }, 1700);
+        setTimeout(() => {
+            lightDrop.hidden = true;
+            chooseFlowerButton.hidden = false;
+            chooseFlowerButton.classList.add("appearing");
+        }, 1800);
+
+    }, 57000);
 });
