@@ -549,84 +549,152 @@ body {
    МАНДРІВКА ТЕМНИМ ЛІСОМ
 ================================= */
 
+
+/* =================================
+   ГУСТИЙ ТЕМНИЙ ЛІС
+================================= */
+
 .forest-scene {
     position: fixed;
     inset: 0;
     z-index: 40;
     overflow: hidden;
     isolation: isolate;
+
     background:
-        radial-gradient(ellipse at 50% 48%,
-            rgba(45, 82, 66, 0.55) 0%,
-            rgba(15, 39, 35, 0.88) 42%,
-            #041216 100%);
+        radial-gradient(ellipse at 50% 43%,
+            rgba(25, 53, 43, 0.48),
+            rgba(7, 24, 22, 0.92) 58%,
+            #020a0c 100%);
 }
 
 #forestScene[hidden] {
     display: none !important;
 }
 
-/* Ледь помітне світло над стежкою */
-
-.forest-scene::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background:
-        linear-gradient(90deg,
-            rgba(1, 10, 12, 0.45),
-            transparent 28%,
-            transparent 72%,
-            rgba(1, 10, 12, 0.45)),
-        linear-gradient(0deg,
-            rgba(1, 10, 12, 0.35),
-            transparent 45%,
-            rgba(1, 10, 12, 0.18));
-}
-
-/* Стежка, що звужується вдалині */
+/* Вузька стежка */
 
 .forest-path {
     position: absolute;
     z-index: 0;
     left: 50%;
-    bottom: -12%;
-    width: 48%;
-    height: 100%;
+    bottom: -5%;
+    width: 42%;
+    height: 105%;
     transform: translateX(-50%);
-    clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
-    background: linear-gradient(
-        to top,
-        rgba(132, 137, 99, 0.22),
-        rgba(91, 119, 88, 0.12) 40%,
-        rgba(48, 78, 62, 0.05) 75%,
-        transparent
+
+    clip-path: polygon(
+        48% 0,
+        52% 0,
+        68% 100%,
+        32% 100%
     );
-    filter: blur(10px);
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(119, 126, 91, 0.25),
+            rgba(75, 98, 73, 0.13) 35%,
+            rgba(38, 62, 49, 0.06) 70%,
+            transparent
+        );
+
+    filter: blur(9px);
 }
 
-/* Простір, у якому рухаються образи */
+/* =================================
+   СТІНИ ДЕРЕВ ОБАБІЧ СТЕЖКИ
+================================= */
+
+.forest-scene::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        /* Темні крони над головою */
+        radial-gradient(ellipse at 10% 0%,
+            rgba(1, 9, 9, 0.98) 0 22%,
+            transparent 55%),
+
+        radial-gradient(ellipse at 90% 0%,
+            rgba(1, 9, 9, 0.98) 0 22%,
+            transparent 55%),
+
+        /* Ліві стовбури */
+        linear-gradient(90deg,
+            rgba(1, 9, 9, 0.98) 0 10%,
+            transparent 10.5% 18%,
+            rgba(4, 16, 14, 0.92) 18.5% 23%,
+            transparent 23.5% 33%,
+            rgba(3, 13, 12, 0.85) 33.5% 37%,
+            transparent 38%) left top / 50% 100% no-repeat,
+
+        /* Праві стовбури */
+        linear-gradient(90deg,
+            transparent 0 12%,
+            rgba(3, 13, 12, 0.85) 12.5% 16%,
+            transparent 16.5% 27%,
+            rgba(4, 16, 14, 0.92) 27.5% 32%,
+            transparent 32.5% 40%,
+            rgba(1, 9, 9, 0.98) 40.5% 100%) right top / 50% 100% no-repeat,
+
+        /* Загальна темрява по краях */
+        linear-gradient(90deg,
+            rgba(1, 7, 8, 0.65),
+            transparent 32%,
+            transparent 68%,
+            rgba(1, 7, 8, 0.65));
+}
+
+/* Затемнення по краях, щоб стежка вела погляд уперед */
+
+.forest-scene::before {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(1, 8, 9, 0.25),
+            transparent 35%,
+            transparent 65%,
+            rgba(1, 8, 9, 0.42)
+        );
+
+    box-shadow:
+        inset 0 0 100px 35px rgba(0, 5, 7, 0.75);
+}
+
+/* =================================
+   ОБРАЗИ МІЖ ДЕРЕВАМИ
+================================= */
 
 .forest-objects {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     inset: 0;
     overflow: hidden;
-    perspective: 700px;
+    perspective: 900px;
 }
-
-/* Кожен образ проходить повз глядача */
 
 .forest-object {
     position: absolute;
     top: var(--height);
-    width: clamp(100px, 17vw, 230px);
-    height: clamp(150px, 35vh, 360px);
+
+    width: clamp(120px, 19vw, 260px);
+    height: clamp(150px, 34vh, 340px);
+
     opacity: 0;
     pointer-events: none;
-    animation: forestPass 12s linear forwards;
+
+    animation: forestPass 12s ease-in-out forwards;
+
     will-change: transform, opacity;
 }
 
@@ -634,131 +702,235 @@ body {
     display: block;
     width: 100%;
     height: 100%;
+
     object-fit: contain;
-    filter: brightness(0.72) saturate(0.78);
+
+    /* Розчиняємо краї, щоб не було вигляду фотокартки */
+    -webkit-mask-image:
+        radial-gradient(
+            ellipse at center,
+            black 25%,
+            rgba(0,0,0,0.8) 48%,
+            transparent 76%
+        );
+
+    mask-image:
+        radial-gradient(
+            ellipse at center,
+            black 25%,
+            rgba(0,0,0,0.8) 48%,
+            transparent 76%
+        );
+
+    filter:
+        brightness(0.58)
+        saturate(0.72)
+        contrast(1.12);
 }
 
-/* Лівий і правий бік стежки */
-
 .forest-object.left-side {
-    left: 35%;
-    --drift: -220px;
+    left: 29%;
+    --drift: -100px;
 }
 
 .forest-object.right-side {
-    left: 65%;
-    --drift: 220px;
+    left: 71%;
+    --drift: 100px;
 }
-
-/* Наближення віддаленого образу */
 
 @keyframes forestPass {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.12);
+        transform: translate(-50%, -50%) scale(0.18);
     }
 
-    12% {
-        opacity: 0.35;
+    18% {
+        opacity: 0.18;
     }
 
-    35% {
-        opacity: 0.75;
+    40% {
+        opacity: 0.68;
     }
 
-    72% {
-        opacity: 0.85;
+    62% {
+        opacity: 0.78;
+    }
+
+    82% {
+        opacity: 0.32;
     }
 
     100% {
         opacity: 0;
         transform:
-            translate(calc(-50% + var(--drift)), 100px)
-            scale(1.9);
+            translate(calc(-50% + var(--drift)), 65px)
+            scale(1.55);
     }
 }
 
-/* Крапля світла попереду */
+/* =================================
+   ДАЛЕКА ЗІРКА КРІЗЬ ТЕМРЯВУ
+================================= */
 
 .light-drop {
     position: absolute;
-    z-index: 4;
+    z-index: 6;
     left: 50%;
-    top: 48%;
+    top: 43%;
+
     width: 5px;
-    height: 8px;
-    border-radius: 50% 50% 50% 0;
-    background: #fff8d8;
+    height: 5px;
+    border-radius: 50%;
+
+    background: #fffbe7;
+
     box-shadow:
-        0 0 12px 5px rgba(255, 244, 190, 0.7),
-        0 0 35px 15px rgba(255, 225, 145, 0.35);
-    transform: translate(-50%, -50%) rotate(-45deg);
+        0 0 5px 2px rgba(255, 250, 215, 0.9),
+        0 0 18px 7px rgba(255, 231, 160, 0.35);
+
+    transform: translate(-50%, -50%);
     opacity: 0;
 }
 
-.light-drop.approaching {
-    animation: lightApproach 8s ease-in-out forwards;
+/* Тонкі промені зірки */
+
+.light-drop::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 90px;
+    height: 90px;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        repeating-conic-gradient(
+            from 0deg,
+            rgba(255, 239, 183, 0.0) 0deg 12deg,
+            rgba(255, 239, 183, 0.7) 12.5deg 13deg,
+            rgba(255, 239, 183, 0.0) 14deg 30deg
+        );
+
+    -webkit-mask-image:
+        radial-gradient(circle, black 0%, transparent 68%);
+
+    mask-image:
+        radial-gradient(circle, black 0%, transparent 68%);
 }
 
-@keyframes lightApproach {
+/* М'яке сяйво навколо зірки */
+
+.light-drop::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 244, 198, 0.55),
+        rgba(255, 220, 139, 0.12) 35%,
+        transparent 72%
+    );
+}
+
+.light-drop.approaching {
+    animation: starApproach 8s ease-in-out forwards;
+}
+
+@keyframes starApproach {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) rotate(-45deg) scale(0.3);
+        transform: translate(-50%, -50%) scale(0.25);
+        filter: brightness(0.5);
     }
 
-    15% {
-        opacity: 1;
+    18% {
+        opacity: 0.45;
+    }
+
+    40% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.5);
     }
 
     65% {
         opacity: 1;
-        transform: translate(-50%, -50%) rotate(-45deg) scale(4);
+        transform: translate(-50%, -50%) scale(3);
+        filter: brightness(1.5);
     }
 
     100% {
         opacity: 1;
-        transform: translate(-50%, -50%) rotate(-45deg) scale(12);
+        transform: translate(-50%, -50%) scale(6);
+        filter: brightness(2);
     }
 }
 
-/* Світло розкривається */
+/* Прорив світла крізь темряву */
 
 .light-drop.becoming-button {
-    animation: lightBloom 1.8s ease-out forwards;
+    animation: starBreakthrough 1.8s ease-out forwards;
 }
 
-@keyframes lightBloom {
-    from {
+@keyframes starBreakthrough {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(6);
+        filter: brightness(2);
+    }
+
+    55% {
         opacity: 1;
         transform: translate(-50%, -50%) scale(12);
+        filter: brightness(2.5);
     }
 
-    to {
+    100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(25);
+        transform: translate(-50%, -50%) scale(18);
+        filter: brightness(3);
     }
 }
 
-/* Кнопка вибору квітки */
+/* =================================
+   КНОПКА «ОБЕРИ СВОЮ КВІТКУ»
+================================= */
 
 .choose-flower-button {
     position: absolute;
-    z-index: 5;
+    z-index: 7;
+
     left: 50%;
     top: 50%;
+
     transform: translate(-50%, -50%);
-    padding: 18px 42px;
+
     min-width: 260px;
+    padding: 18px 42px;
+
     border: 1px solid rgba(244, 226, 169, 0.8);
     border-radius: 60px;
-    background: rgba(13, 35, 31, 0.92);
+
+    background: rgba(13, 35, 31, 0.94);
+
     color: #fff4d0;
+
     font-family: "Rutenia", serif;
     font-size: clamp(20px, 3vw, 30px);
-    letter-spacing: 1px;
+
     box-shadow:
-        0 0 18px rgba(255, 231, 166, 0.35),
-        0 0 45px rgba(255, 231, 166, 0.18);
+        0 0 18px rgba(255, 231, 166, 0.4),
+        0 0 45px rgba(255, 231, 166, 0.2);
+
     cursor: pointer;
     opacity: 0;
 }
@@ -782,7 +954,8 @@ body {
 }
 
 .choose-flower-button:hover {
-    background: rgba(35, 68, 54, 0.95);
+    background: rgba(35, 68, 54, 0.96);
+
     box-shadow:
         0 0 25px rgba(255, 231, 166, 0.6),
         0 0 60px rgba(255, 231, 166, 0.3);
@@ -792,18 +965,18 @@ body {
 
 @media (max-width: 650px) {
     .forest-object {
-        width: clamp(85px, 27vw, 155px);
+        width: clamp(90px, 27vw, 155px);
         height: clamp(130px, 30vh, 240px);
     }
 
     .forest-object.left-side {
-        left: 28%;
-        --drift: -130px;
+        left: 24%;
+        --drift: -65px;
     }
 
     .forest-object.right-side {
-        left: 72%;
-        --drift: 130px;
+        left: 76%;
+        --drift: 65px;
     }
 
     .choose-flower-button {
