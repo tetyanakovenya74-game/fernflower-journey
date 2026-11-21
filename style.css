@@ -544,179 +544,7 @@ body {
    СЦЕНА ПОДОРОЖІ ТЕМНИМ ЛІСОМ
    ========================================= */
 
-.forest-scene {
-    position: fixed;
-    inset: 0;
-    z-index: 40;
 
-    overflow: hidden;
-    background: #041216;
-}
-
-#forestScene[hidden] {
-    display: none !important;
-}
-
-.forest-scene img {
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    opacity: 0;
-    transition: opacity 1.5s ease;
-}
-
-.forest-scene img.visible {
-    opacity: 1;
-}
-
-/* Напис після проходження лісу */
-
-#forestPrompt {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 90%;
-
-    transform: translate(-50%, -50%);
-
-    margin: 0;
-
-    text-align: center;
-
-    color: #e2d394;
-
-    font-family: "Rutenia", serif;
-    font-size: clamp(28px, 4vw, 48px);
-
-    text-shadow:
-        0 0 12px rgba(226, 211, 148, 0.5),
-        0 0 24px rgba(226, 211, 148, 0.7);
-
-    animation: promptAppear 3s ease both;
-}
-
-@keyframes promptAppear {
-    from {
-        opacity: 0;
-        filter: blur(8px);
-    }
-
-    to {
-        opacity: 1;
-        filter: blur(0);
-    }
-}
-
-
-/* =========================================
-   МОБІЛЬНА ВЕРСІЯ
-   ========================================= */
-
-@media (max-width: 650px) {
-
-    /* Вступ */
-
-    .intro-text {
-        width: 94vw;
-        height: 240px;
-        font-size: clamp(30px, 7vw, 42px);
-    }
-
-    .start-button {
-        min-width: 220px;
-        padding: 17px 27px;
-        font-size: 19px;
-    }
-
-    /* Запитання */
-
-    #choiceScene {
-        padding: 25px 16px;
-        align-items: center;
-    }
-
-    #choiceScene .choice-panel {
-        width: 100%;
-    }
-
-    #choiceScene .choice-question {
-        font-size: clamp(30px, 8vw, 40px);
-        line-height: 1.3;
-        margin-bottom: 30px;
-    }
-
-    /* Кнопки */
-
-    #choiceScene .choice-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        grid-template-areas:
-            "one three"
-            "two four"
-            "five five";
-
-        gap: 13px 10px;
-        margin-bottom: 30px;
-    }
-
-    #choiceScene .choice-button {
-        min-height: 76px;
-        padding: 10px 8px;
-        font-size: clamp(16px, 4vw, 19px);
-        line-height: 1.3;
-    }
-
-    #choiceScene #enterForestButton {
-        min-width: 230px;
-        padding: 15px 24px;
-        font-size: 22px;
-    }
-
-    #forestPrompt {
-        font-size: clamp(26px, 7vw, 36px);
-    }
-}
-
-
-/* =========================================
-   ДУЖЕ НИЗЬКІ ЕКРАНИ
-   ========================================= */
-
-@media (max-height: 650px) and (min-width: 651px) {
-
-    #choiceScene {
-        align-items: flex-start;
-        padding-top: 22px;
-        padding-bottom: 22px;
-    }
-
-    #choiceScene .choice-question {
-        font-size: 42px;
-        margin-bottom: 25px;
-    }
-
-    #choiceScene .choice-button {
-        min-height: 76px;
-        padding: 12px 16px;
-        font-size: 21px;
-    }
-
-    #choiceScene .choice-list {
-        gap: 14px 16px;
-        margin-bottom: 22px;
-    }
-
-    #choiceScene #enterForestButton {
-        padding: 13px 28px;
-        font-size: 23px;
-    }
-}
 /* =================================
    МАНДРІВКА ТЕМНИМ ЛІСОМ
 ================================= */
@@ -724,74 +552,105 @@ body {
 .forest-scene {
     position: fixed;
     inset: 0;
+    z-index: 40;
     overflow: hidden;
+    isolation: isolate;
     background:
-        radial-gradient(
-            ellipse at 50% 48%,
-            rgba(37, 76, 65, 0.65) 0%,
-            rgba(12, 35, 34, 0.9) 48%,
-            #061513 100%
-        );
+        radial-gradient(ellipse at 50% 48%,
+            rgba(45, 82, 66, 0.55) 0%,
+            rgba(15, 39, 35, 0.88) 42%,
+            #041216 100%);
 }
 
-/* Стежка, що йде вдалину */
+#forestScene[hidden] {
+    display: none !important;
+}
+
+/* Ледь помітне світло над стежкою */
+
+.forest-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg,
+            rgba(1, 10, 12, 0.45),
+            transparent 28%,
+            transparent 72%,
+            rgba(1, 10, 12, 0.45)),
+        linear-gradient(0deg,
+            rgba(1, 10, 12, 0.35),
+            transparent 45%,
+            rgba(1, 10, 12, 0.18));
+}
+
+/* Стежка, що звужується вдалині */
 
 .forest-path {
     position: absolute;
+    z-index: 0;
     left: 50%;
-    bottom: -10%;
-    width: 34%;
-    height: 90%;
+    bottom: -12%;
+    width: 48%;
+    height: 100%;
     transform: translateX(-50%);
+    clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
     background: linear-gradient(
         to top,
-        rgba(106, 112, 82, 0.18),
-        rgba(64, 91, 72, 0.10) 45%,
+        rgba(132, 137, 99, 0.22),
+        rgba(91, 119, 88, 0.12) 40%,
+        rgba(48, 78, 62, 0.05) 75%,
         transparent
     );
-    clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
-    filter: blur(12px);
+    filter: blur(10px);
 }
 
-/* Простір лісу */
+/* Простір, у якому рухаються образи */
 
 .forest-objects {
     position: absolute;
+    z-index: 2;
     inset: 0;
-    perspective: 900px;
     overflow: hidden;
+    perspective: 700px;
 }
+
+/* Кожен образ проходить повз глядача */
 
 .forest-object {
     position: absolute;
     top: var(--height);
-    width: clamp(90px, 19vw, 260px);
-    height: clamp(130px, 32vh, 340px);
+    width: clamp(100px, 17vw, 230px);
+    height: clamp(150px, 35vh, 360px);
     opacity: 0;
-    animation: forestPass 9s ease-in forwards;
     pointer-events: none;
+    animation: forestPass 12s linear forwards;
+    will-change: transform, opacity;
 }
 
 .forest-object img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: brightness(0.68) saturate(0.75);
+    filter: brightness(0.72) saturate(0.78);
 }
 
-/* Образи з'являються обабіч стежки */
+/* Лівий і правий бік стежки */
 
 .forest-object.left-side {
-    left: 34%;
-    --drift: -190px;
-    transform-origin: center bottom;
+    left: 35%;
+    --drift: -220px;
 }
 
 .forest-object.right-side {
-    left: 66%;
-    --drift: 190px;
-    transform-origin: center bottom;
+    left: 65%;
+    --drift: 220px;
 }
+
+/* Наближення віддаленого образу */
 
 @keyframes forestPass {
     0% {
@@ -799,11 +658,15 @@ body {
         transform: translate(-50%, -50%) scale(0.12);
     }
 
-    18% {
-        opacity: 0.65;
+    12% {
+        opacity: 0.35;
     }
 
-    65% {
+    35% {
+        opacity: 0.75;
+    }
+
+    72% {
         opacity: 0.85;
     }
 
@@ -811,14 +674,15 @@ body {
         opacity: 0;
         transform:
             translate(calc(-50% + var(--drift)), 100px)
-            scale(1.5);
+            scale(1.9);
     }
 }
 
-/* Крапля світла вдалині */
+/* Крапля світла попереду */
 
 .light-drop {
     position: absolute;
+    z-index: 4;
     left: 50%;
     top: 48%;
     width: 5px;
@@ -857,26 +721,29 @@ body {
     }
 }
 
+/* Світло розкривається */
+
 .light-drop.becoming-button {
     animation: lightBloom 1.8s ease-out forwards;
 }
 
 @keyframes lightBloom {
-    0% {
+    from {
         opacity: 1;
         transform: translate(-50%, -50%) scale(12);
     }
 
-    100% {
+    to {
         opacity: 0;
         transform: translate(-50%, -50%) scale(25);
     }
 }
 
-/* Кнопка, що народжується зі світла */
+/* Кнопка вибору квітки */
 
 .choose-flower-button {
     position: absolute;
+    z-index: 5;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -884,7 +751,7 @@ body {
     min-width: 260px;
     border: 1px solid rgba(244, 226, 169, 0.8);
     border-radius: 60px;
-    background: rgba(13, 35, 31, 0.88);
+    background: rgba(13, 35, 31, 0.92);
     color: #fff4d0;
     font-family: "Rutenia", serif;
     font-size: clamp(20px, 3vw, 30px);
@@ -919,4 +786,29 @@ body {
     box-shadow:
         0 0 25px rgba(255, 231, 166, 0.6),
         0 0 60px rgba(255, 231, 166, 0.3);
+}
+
+/* Мобільні екрани */
+
+@media (max-width: 650px) {
+    .forest-object {
+        width: clamp(85px, 27vw, 155px);
+        height: clamp(130px, 30vh, 240px);
+    }
+
+    .forest-object.left-side {
+        left: 28%;
+        --drift: -130px;
+    }
+
+    .forest-object.right-side {
+        left: 72%;
+        --drift: 130px;
+    }
+
+    .choose-flower-button {
+        min-width: 230px;
+        padding: 16px 25px;
+        font-size: 23px;
+    }
 }
