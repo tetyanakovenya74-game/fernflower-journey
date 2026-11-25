@@ -577,7 +577,7 @@ body {
 .forest-scene::before {
     content: "";
     position: absolute;
-    inset: -5%;
+    inset: -8%;
     z-index: 0;
 
     background-image: url("Стежка_монохромна_ліс.png");
@@ -585,10 +585,12 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
 
-    filter: brightness(0.58) saturate(0.72);
-    transform: scale(1);
+    filter: brightness(0.48) saturate(0.72);
 
-    animation: forestTravel 60s ease-in-out forwards;
+    transform: scale(1);
+    transform-origin: 50% 48%;
+
+    animation: forestTravel 60s linear forwards;
     will-change: transform;
 }
 
@@ -597,10 +599,19 @@ body {
         transform: scale(1);
     }
 
+    35% {
+        transform: scale(1.10);
+    }
+
+    70% {
+        transform: scale(1.20);
+    }
+
     100% {
-        transform: scale(1.16);
+        transform: scale(1.32);
     }
 }
+
 
 /* ГЛИБОКА ТЕМРЯВА НА КРАЯХ І В ПЕРЕДНЬОМУ ПЛАНІ */
 
