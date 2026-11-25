@@ -350,6 +350,7 @@ choiceButtons.forEach((button) => {
     });
 });
 
+
 /* =================================
    ВХІД ДО ЛІСУ
 ================================= */
@@ -358,57 +359,59 @@ enterForestButton.addEventListener("click", () => {
     document.getElementById("choiceScene").hidden = true;
 
     const forestScene = document.getElementById("forestScene");
-    const forestObjects = document.getElementById("forestObjects");
+    const forestImages = document.getElementById("forestImages");
     const lightDrop = document.getElementById("lightDrop");
-    const chooseFlowerButton = document.getElementById("chooseFlowerButton");
+    const chooseFlowerButton =
+        document.getElementById("chooseFlowerButton");
 
     forestScene.hidden = false;
 
-    // Очищуємо попередній вміст
-    forestObjects.innerHTML = "";
-    lightDrop.hidden = true;
-    chooseFlowerButton.hidden = true;
+    // Початковий стан сцени
+    forestImages.innerHTML = "";
 
-    // Створюємо 12 образів лісу
+    lightDrop.classList.remove(
+        "approaching",
+        "becoming-button"
+    );
+    lightDrop.hidden = false;
+
+    chooseFlowerButton.hidden = true;
+    chooseFlowerButton.classList.remove("appearing");
+
+    // Поступова поява 12 образів у просторі лісу
     for (let i = 0; i < 12; i++) {
-        const object = document.createElement("div");
+        const vision = document.createElement("div");
         const image = document.createElement("img");
 
-        object.className = "forest-object";
-
-        // Чергуємо лівий і правий бік стежки
-        object.classList.add(i % 2 === 0 ? "left-side" : "right-side");
+        vision.className = "forest-vision";
 
         image.src = `Темнийліс${i + 1}.png`;
         image.alt = "";
 
-        object.appendChild(image);
+        vision.appendChild(image);
 
-        // Кожен наступний образ з'являється трохи пізніше
-        object.style.animationDelay = `${i * 3.5}s`;
+        // Образи виникають один за одним
+        vision.style.animationDelay = `${i * 3.5}s`;
 
-        // Невелика різниця у висоті створює природніший ліс
-        object.style.setProperty("--height", `${35 + (i % 4) * 8}%`);
-
-        forestObjects.appendChild(object);
+        forestImages.appendChild(vision);
     }
 
-    // Наприкінці стежки з'являється крапля світла
+    // Ледь помітна зоря починає оживати
     setTimeout(() => {
-        lightDrop.hidden = false;
         lightDrop.classList.add("approaching");
     }, 49000);
 
-    // Крапля перетворюється на кнопку
+    // Світло проривається крізь темряву
     setTimeout(() => {
         lightDrop.classList.remove("approaching");
         lightDrop.classList.add("becoming-button");
-
-        setTimeout(() => {
-            lightDrop.hidden = true;
-            chooseFlowerButton.hidden = false;
-            chooseFlowerButton.classList.add("appearing");
-        }, 1800);
-
     }, 57000);
+
+    // Сяйво перетворюється на кнопку
+    setTimeout(() => {
+        lightDrop.hidden = true;
+
+        chooseFlowerButton.hidden = false;
+        chooseFlowerButton.classList.add("appearing");
+    }, 58800);
 });
