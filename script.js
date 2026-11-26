@@ -415,3 +415,95 @@ enterForestButton.addEventListener("click", () => {
         chooseFlowerButton.classList.add("appearing");
     }, 58800);
 });
+/* =================================
+   ВИБІР КВІТКИ ПАПОРОТІ
+================================= */
+
+// Набори квіток відповідно до відповідей
+
+const flowersByAnswer = {
+    "1": [1, 2, 3, 5, 6, 8, 9, 10],
+    "2": [1, 4, 7, 9, 10, 12],
+    "3": [3, 6, 7, 10, 11],
+    "4": [1, 3, 4, 5, 6, 8, 9, 10],
+    "5": [2, 4, 7, 10, 11, 12]
+};
+
+const chooseFlowerButton =
+    document.getElementById("chooseFlowerButton");
+
+const flowerScene =
+    document.getElementById("flowerScene");
+
+const flowerImage =
+    document.getElementById("flowerImage");
+
+let flowerChosen = false;
+
+
+// Поява квітки після натискання кнопки
+
+chooseFlowerButton.addEventListener("click", () => {
+
+    // Одна квітка за одну мандрівку
+    if (flowerChosen || !selectedAnswer) {
+        return;
+    }
+
+    flowerChosen = true;
+
+    // Беремо відповідний набір
+    const availableFlowers =
+        flowersByAnswer[selectedAnswer];
+
+    // Випадково обираємо одну квітку
+    const randomIndex =
+        Math.floor(Math.random() * availableFlowers.length);
+
+    const flowerNumber =
+        availableFlowers[randomIndex];
+
+    // Формуємо назву файлу: 01.jpg, 02.jpg ... 12.jpg
+    const flowerFile =
+        String(flowerNumber).padStart(2, "0") + ".jpg";
+
+
+    // Починаємо фінальну сцену
+    document.getElementById("forestScene").hidden = true;
+
+    flowerScene.hidden = false;
+
+    // Гонг звучить на початку появи квітки
+    playSound(gongSound);
+
+
+    // Підготовка зображення
+    flowerImage.classList.remove("flower-appearing");
+    flowerImage.dataset.revealed = "false";
+
+    function revealFlower() {
+
+        if (flowerImage.dataset.revealed === "true") {
+            return;
+        }
+
+        flowerImage.dataset.revealed = "true";
+
+        // Перезапускаємо анімацію появи
+        flowerImage.classList.remove("flower-appearing");
+
+        void flowerImage.offsetWidth;
+
+        flowerImage.classList.add("flower-appearing");
+    }
+
+    flowerImage.onload = revealFlower;
+
+    flowerImage.src = flowerFile;
+
+    // Якщо зображення вже завантажене з кешу
+    if (flowerImage.complete && flowerImage.naturalWidth > 0) {
+        revealFlower();
+    }
+
+});
