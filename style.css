@@ -981,7 +981,77 @@ body {
         padding: 18px 30px;
         font-size: 21px;
     }
+/* =================================
+   ФІНАЛЬНА СЦЕНА КВІТКИ
+================================= */
 
+.flower-scene {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(2, 15, 14, 0.55),
+            rgba(2, 15, 14, 0.55)
+        ),
+        url("forest.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    z-index: 100;
+}
+
+.flower-scene[hidden] {
+    display: none !important;
+}
+
+
+/* Зображення квітки */
+
+#flowerImage {
+    display: block;
+
+    max-width: 80vw;
+    max-height: 80vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    opacity: 0;
+}
+
+
+/* Поступове проявлення */
+
+#flowerImage.flower-appearing {
+    animation: flowerReveal 2s ease-out forwards;
+}
+
+@keyframes flowerReveal {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.94);
+        filter: brightness(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+}
     .light-drop::before {
         width: 85px;
         height: 85px;
